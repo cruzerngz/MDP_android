@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.mdp_android.MainActivity">
+
+
+    <item android:id="@+id/bluetooth_settings"
+        android:title="Bluetooth"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_baseline_bluetooth_24" >
+
+        <menu>
+            <item android:id="@+id/bt_action1"
+                android:title="Enable discovery"
+                android:onClick="enableBTDiscovery"
+                />
+
+            <item android:id="@+id/bt_action3"
+                android:title="Connect to device"
+                android:onClick="connectDeviceBtn"/>
+        </menu>
+
+    </item>
+
+</menu>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/imageIDPopUpLabel"
+        android:layout_width="130dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="30dp"
+        android:gravity="end|center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Image ID:"
+        android:textSize="16sp"
+        android:textColor="@color/colorBlack"
+        android:textStyle="normal"/>
+
+    <Spinner
+        android:id="@+id/imageIDPopUpSpinner"
+        android:layout_width="120dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toEndOf="@+id/imageIDPopUpLabel"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/obstacleBearingPopUpLabel"
+        android:layout_width="130dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="60dp"
+        android:gravity="end|center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Obstacle Bearing:"
+        android:textSize="16sp"
+        android:textColor="@color/colorBlack"
+        android:textStyle="normal"/>
+
+    <Spinner
+        android:id="@+id/obstacleBearingPopUpSpinner"
+        android:layout_width="120dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintStart_toEndOf="@+id/obstacleBearingPopUpLabel"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
