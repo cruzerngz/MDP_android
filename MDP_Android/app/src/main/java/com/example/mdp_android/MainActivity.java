@@ -785,7 +785,7 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
             case "w":
                 Log.e("MainActivity","Moving Forward");
                 appendMessage("Robot","Moving Forward...");
-                robotStatusTextView.setText("Moving");
+                robotStatusTextView.setText("Moving Forward");
                 gridMap.moveRobot("forward");
                 updateRobotAxisAndBearing();
                 if (gridMap.getValidPosition()) {
@@ -801,7 +801,7 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
             case "s":
                 Log.e("MainActivity","Moving Backward");
                 appendMessage("Robot","Moving Backward...");
-                robotStatusTextView.setText("Moving");
+                robotStatusTextView.setText("Moving Backwards");
 
                 gridMap.moveRobot("back");
                 updateRobotAxisAndBearing();
@@ -811,7 +811,7 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
             case "a":
                 Log.e("MainActivity","Turning Left");
                 appendMessage("Robot","Turning Left...");
-                robotStatusTextView.setText("Moving");
+                robotStatusTextView.setText("Turning Left");
 
                 gridMap.moveRobot("left");
                 updateRobotAxisAndBearing();
@@ -821,7 +821,7 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
             case "d":
                 Log.e("MainActivity","Turning Right");
                 appendMessage("Robot","Turning Right...");
-                robotStatusTextView.setText("Moving");
+                robotStatusTextView.setText("Turning Right");
 
                 gridMap.moveRobot("right");
                 updateRobotAxisAndBearing();

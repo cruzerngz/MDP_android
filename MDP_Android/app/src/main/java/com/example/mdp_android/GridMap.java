@@ -480,6 +480,16 @@ public class GridMap extends View {
         robotBearingTextView.setText(direction);
     }
 
+    public static void sendObstacleInformation(int column, int row, String imageid, String face) {
+        String x = String.valueOf(column-1);
+        String y = String.valueOf(row-1);
+        String obstacleImageID = imageid;
+        String obstacleFace = face;
+
+        String info = "Coordinates: " + x + ", " + y + " | Direction: " + obstacleFace + " | ImageID: " + obstacleImageID;
+        BTManager.instance.myBluetoothService.sendMessage(info);
+    }
+
     public void setObstacleCoord(int col, int row) {
         showLog("Entering setObstacleCoord");
         int[] obstacleCoord = new int[]{col, row};
@@ -674,6 +684,7 @@ public class GridMap extends View {
                     OBSTACLE_BEARING_LIST.get(endRow - 1)[endColumn - 1] = tempBearing;
 
                     setObstacleCoord(endColumn, endRow);
+                    sendObstacleInformation(endColumn, endRow, tempID, tempBearing);
 
                     for (int i = 0; i < obstacleCoord.size(); i++) {
                         if (Arrays.equals(obstacleCoord.get(i), new int[]{initialColumn - 1, initialRow - 1})) {
@@ -795,6 +806,8 @@ public class GridMap extends View {
                             showLog("newImageID = " + newImageID);
                             showLog("newObstacleBearing = " + newObstacleBearing);
 
+                            sendObstacleInformation(tCol, tRow, newImageID, newObstacleBearing);
+
                             callInvalidate();
                         }
                     });
@@ -889,6 +902,7 @@ public class GridMap extends View {
 
                     this.setObstacleCoord(column, row);
                     // print msg here
+                    sendObstacleInformation(column, row, imageID, obstacleBearing);
 
 //                    Log.e("GridMap","x y coordinate are: " + this.getObstacleCoord());
 
