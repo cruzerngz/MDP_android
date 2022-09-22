@@ -69,6 +69,7 @@ public class MyBluetoothService {
             }
 
             // successfully connected to device
+            BTManager.instance.toggleLockMessageInterface();
             BTManager.instance.passMessageToMessageInterface("System","I/O stream established!");
             Log.e(TAG, "I/O stream established!");
 
@@ -99,6 +100,7 @@ public class MyBluetoothService {
                     // if input stream disconnected means device lost connection
                     BTManager.instance.passMessageToMessageInterface("System","Device " + BTManager.instance.currentDevice.getName() + " disconnected!");
                     Log.e(TAG, "Device " + BTManager.instance.currentDevice.getName() + " disconnected!");
+                    BTManager.instance.toggleLockMessageInterface();
 
                     BTManager.instance.reconnect();
                     break;

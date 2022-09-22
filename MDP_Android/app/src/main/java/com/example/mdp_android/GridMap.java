@@ -49,6 +49,10 @@ public class GridMap extends View {
         setWillNotDraw(false);
     }
 
+    // bonus
+    ObstacleManager om = new ObstacleManager();
+    // bonus(end)
+
     SharedPreferences sharedPreferences;
 
     private static JSONObject receivedJsonObject = new JSONObject();
@@ -684,6 +688,11 @@ public class GridMap extends View {
                     OBSTACLE_BEARING_LIST.get(endRow - 1)[endColumn - 1] = tempBearing;
 
                     setObstacleCoord(endColumn, endRow);
+
+                    if(!om.checkExists(tempID))
+                        om.addObstacle(new Obstacle(tempID,endColumn+"",endRow+"",tempBearing,""));
+                    else
+                        om.updateObstacle(tempID,endColumn+"",endRow+"",tempBearing,"");
                     sendObstacleInformation(endColumn, endRow, tempID, tempBearing);
 
                     for (int i = 0; i < obstacleCoord.size(); i++) {
@@ -806,7 +815,13 @@ public class GridMap extends View {
                             showLog("newImageID = " + newImageID);
                             showLog("newObstacleBearing = " + newObstacleBearing);
 
+                            // assume new obstacle confirmed
+                            if(!om.checkExists(newImageID))
+                                om.addObstacle(new Obstacle(newImageID,tCol+"",tRow+"",newObstacleBearing,""));
+                            else
+                                om.updateObstacle(newImageID,tCol+"",tRow+"",newObstacleBearing,"");
                             sendObstacleInformation(tCol, tRow, newImageID, newObstacleBearing);
+
 
                             callInvalidate();
                         }
@@ -902,6 +917,12 @@ public class GridMap extends View {
 
                     this.setObstacleCoord(column, row);
                     // print msg here
+
+                    if(!om.checkExists(imageID))
+                        om.addObstacle(new Obstacle(imageID,column+"",row+"",obstacleBearing,""));
+                    else
+                        om.updateObstacle(imageID,column+"",row+"",obstacleBearing,"");
+
                     sendObstacleInformation(column, row, imageID, obstacleBearing);
 
 //                    Log.e("GridMap","x y coordinate are: " + this.getObstacleCoord());
@@ -984,10 +1005,16 @@ public class GridMap extends View {
             }
         }
 
+        // update om
+        om.clearObstacles();
+
         showLog("Exiting resetMap");
         this.invalidate();
     }
 
+    public boolean isRobotOnMap(){
+        return (curCoord[0] != -1 && curCoord[1] != -1);
+    }
     public void updateMapInformation() throws JSONException{
         showLog("Entering updateMapInformation");
         JSONObject mapInformation = this.getReceivedJsonObject();
@@ -1135,6 +1162,10 @@ public class GridMap extends View {
         showLog("Entering moveRobot");
         setValidPosition(false);
         int[] curCoord = this.getCurCoord();
+
+        if(curCoord[0] == -1 || curCoord[1] == -1)
+            return;
+
         ArrayList<int[]> obstacleCoord = this.getObstacleCoord();
         this.setOldRobotCoord(curCoord[0], curCoord[1]);
         int[] oldCoord = this.getOldRobotCoord();
@@ -2125,10 +2156,30 @@ public class GridMap extends View {
     //Week 8 task
     public boolean updateObstaclesFromRPI(String obstacleID, String imageID) {
         showLog("starting updateObstaclesFromRPI");
-        int x = obstacleCoord.get(Integer.parseInt(obstacleID) - 1)[0];
-        int y = obstacleCoord.get(Integer.parseInt(obstacleID) - 1)[1];
-        IMAGE_ID_LIST.get(y)[x] = (imageID.equals("-1")) ? "" : imageID;
-        this.invalidate();
-        return true;
+        // old way
+//        int x = obstacleCoord.get(Integer.parseInt(obstacleID) - 1)[0];
+//        int y = obstacleCoord.get(Integer.parseInt(obstacleID) - 1)[1];
+//        IMAGE_ID_LIST.get(y)[x] = (imageID.equals("-1")) ? "" : imageID;
+//        this.invalidate();
+        //
+
+        // legit way
+        om.updateObstacle(obstacleID,"","","",imageID);
+        Obstacle temp = om.getObstacle(obstacleID);
+        if(temp != null){
+            int y = Integer.parseInt(temp.y);
+            int x = Integer.parseInt(temp.x);
+            IMAGE_ID_LIST.get(y - 1)[x - 1] = imageID;
+
+            this.invalidate();
+            return true;
+        }else{
+            Log.e("sadflksf", "obstacle " + obstacleID + " does not exist! Cannot update.");
+            return false;
+        }
+
+
+        //
+
     }
 }

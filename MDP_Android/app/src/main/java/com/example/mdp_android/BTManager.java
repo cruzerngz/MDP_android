@@ -37,7 +37,7 @@ public class BTManager {
     BluetoothAdapter bluetoothAdapter;
     public MyBluetoothService myBluetoothService;
     private AppCompatActivity deviceActivityCtx;
-    private IAppendMessages messageInterface;
+    public IAppendMessages messageInterface;
     public String currentDeviceName = "";
     public BluetoothDevice currentDevice = null;
 
@@ -336,6 +336,13 @@ public class BTManager {
         });
     }
 
+    public void toggleLockMessageInterface(){
+        appCompatActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                messageInterface.toggleLock();
+            }
+        });
+    }
 
     // Persistent connection: if somehow disconnect, reconnect the socket
     // delete connected thread in background

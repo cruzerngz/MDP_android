@@ -31,10 +31,10 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="center">
         <!--        app:layout_anchor="@+id/include">-->
+
 
         <!-- debug -->
         <LinearLayout
@@ -650,6 +650,8 @@
                         app:layout_constraintLeft_toRightOf="@+id/sendMsgButton"
                         app:layout_constraintTop_toBottomOf="@+id/sendMsgEditText" />
 
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
         </LinearLayout>
@@ -726,6 +728,27 @@
 <!--            app:layout_constraintHorizontal_bias="1.0"-->
 <!--            app:layout_constraintStart_toStartOf="parent" />-->
 
-
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/greyLock"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="60dp"
+            android:alpha="0.8"
+            android:background="@color/black"
+            >
+            <TextView
+                android:layout_height="100dp"
+                android:layout_width="400dp"
+                android:textAlignment="center"
+                android:gravity="center"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="No device connected"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                tools:ignore="MissingConstraints" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

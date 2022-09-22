@@ -1,12 +1,15 @@
 package com.example.mdp_android;
 
 import android.annotation.SuppressLint;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.fragment.app.DialogFragment;
+import android.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -19,6 +22,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
     BTManager btManager;
     TextView receiveMsgTextView;
     EditText sendMsgEditText;
+    private boolean controlsLocked = true;
 
     public static Context ctx;
 
@@ -97,6 +102,17 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
     String imageIDCommand = "";
 
     public static Handler timerHandler = new Handler();
+
+    private static void setViewAndChildrenEnabled(View view, boolean enabled) {
+        view.setEnabled(enabled);
+        if (view instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                View child = viewGroup.getChildAt(i);
+                setViewAndChildrenEnabled(child, enabled);
+            }
+        }
+    }
 
     public Runnable imageRecognitionTimerRunnable = new Runnable() {
         @Override
@@ -518,6 +534,7 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
 //            }
 //        });
 
+        setViewAndChildrenEnabled(findViewById(R.id.constraintLayout),false);
     }
     // UI PART
     public static void sharedPreferences() {
@@ -781,6 +798,9 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
     }
 
     private void handleMovement(String content){
+        if(!gridMap.isRobotOnMap())
+            return;
+        
         switch(content){
             case "w":
                 Log.e("MainActivity","Moving Forward");
@@ -788,12 +808,12 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
                 robotStatusTextView.setText("Moving Forward");
                 gridMap.moveRobot("forward");
                 updateRobotAxisAndBearing();
-                if (gridMap.getValidPosition()) {
-                    updateStatus("moving forward");
-                }
-                else {
-                    updateStatus("Unable to move forward");
-                }
+//                if (gridMap.getValidPosition()) {
+//                    updateStatus("moving forward");
+//                }
+//                else {
+//                    updateStatus("Unable to move forward");
+//                }
 
 
                 break;
@@ -868,11 +888,24 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
     // Function to implement
     public void updateObstacle(String obstacleNumber, String targetID){
         // TO DO
-        gridMap.updateObstaclesFromRPI(obstacleNumber,targetID);
+        boolean result = gridMap.updateObstaclesFromRPI(obstacleNumber,targetID);
+        if(result == true){
+            appendMessage("Robot", "Obstacle " + obstacleNumber + " identified as " + targetID+ "!");
+        }
     }
 
     public void updateRobotPosition(String x, String y, String direction){
         // TO DO
         gridMap.updateRobotPositionFromAlgo(Integer.parseInt(x),Integer.parseInt(y),direction);
+        appendMessage("Robot","Setting position...");
+        robotStatusTextView.setText("Setting New Position");
     }
+   @Override
+   public void toggleLock() {
+        controlsLocked = !controlsLocked;
+        findViewById(R.id.greyLock).setVisibility(controlsLocked?View.VISIBLE:View.INVISIBLE);
+        setViewAndChildrenEnabled(findViewById(R.id.constraintLayout),!controlsLocked);
+   }
+
+
 }

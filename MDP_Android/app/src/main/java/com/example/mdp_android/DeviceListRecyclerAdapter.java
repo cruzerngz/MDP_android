@@ -45,6 +45,8 @@ public class DeviceListRecyclerAdapter extends RecyclerView.Adapter<DeviceListRe
                     Toast.makeText(BTManager.instance.appCompatActivity, BTManager.instance.currentDeviceName + " already connected", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                // show a toast that it is connecting
+                Toast.makeText(BTManager.instance.appCompatActivity, "connecting...", Toast.LENGTH_SHORT).show();
                 BTManager.instance.stopDiscovery();
                 int position = getAdapterPosition();
                 BTManager.instance.startPairing();
