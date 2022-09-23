@@ -490,7 +490,7 @@ public class GridMap extends View {
         String obstacleImageID = imageid;
         String obstacleFace = face;
 
-        String info = "Coordinates: " + x + ", " + y + " | Direction: " + obstacleFace + " | ImageID: " + obstacleImageID;
+        String info = "Coordinates: " + x + ", " + y + " | Direction: " + obstacleFace + " | currentObstacleID: " + obstacleImageID;
         BTManager.instance.myBluetoothService.sendMessage(info);
         TextView receiveMsgTextView = ((Activity)this.getContext()).findViewById(R.id.receiveMsgTextView);
         receiveMsgTextView.append("\n" + info + "\n");
@@ -641,6 +641,8 @@ public class GridMap extends View {
                     obstacleCoord.remove(i);
                 }
             }
+            // remove from Obstacles array List
+            om.removeObstacle(Integer.toString(initialColumn-1),Integer.toString(initialRow-1));
             cells[initialColumn][20-initialRow].setType("unexplored");
             IMAGE_ID_LIST.get(initialRow-1)[initialColumn-1] = "";
             OBSTACLE_BEARING_LIST.get(initialRow-1)[initialColumn-1] = "";
@@ -914,10 +916,6 @@ public class GridMap extends View {
                     String imageID = (MainActivity.imageID).equals("0") ? "" : MainActivity.imageID;
                     String obstacleBearing = MainActivity.obstacleBearing;
 
-
-
-
-
                     if(!om.checkExists(imageID))
                     {
                         IMAGE_ID_LIST.get(row - 1)[column - 1] = "";
@@ -932,7 +930,7 @@ public class GridMap extends View {
                     }
 
                     else{
-//                        om.updateObstacle(imageID,column+"",row+"",obstacleBearing,"");
+//                      om.updateObstacle(imageID,column+"",row+"",obstacleBearing,"");
                         TextView receiveMsgTextView = ((Activity)this.getContext()).findViewById(R.id.receiveMsgTextView);
                         receiveMsgTextView.append("\n" + "ObstacleID already on map, Please choose other IDs!" + "\n");
                         Toast.makeText(BTManager.instance.appCompatActivity, "ObstacleID already on map", Toast.LENGTH_SHORT).show();
