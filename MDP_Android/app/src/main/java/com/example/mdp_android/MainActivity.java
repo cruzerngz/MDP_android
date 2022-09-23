@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
     String imageIDCommand = "";
 
     public static Handler timerHandler = new Handler();
+    private Object AppCompatActivity;
 
     private static void setViewAndChildrenEnabled(View view, boolean enabled) {
         view.setEnabled(enabled);
@@ -228,15 +229,6 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
         imageRecognitionTimer = 0;
         fastestCarTimer = 0;
 
-        //Initialising the communication segment
-
-
-//        receiveMessageTextBox = findViewById(R.id.receiveMessageTextBox);
-//        sendMessageTextBox = findViewById(R.id.sendMessageTextBox);
-//        sendMessageButton = findViewById(R.id.sendMessageButton);
-//
-//        receiveMessageTextBox.setMovementMethod(new ScrollingMovementMethod());
-
         //Creating the layout for the spinner
         ArrayAdapter<CharSequence> imageIDAdapter = ArrayAdapter.createFromResource(context, R.array.imageID_Array, android.R.layout.simple_spinner_item);
         imageIDAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -270,6 +262,8 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
                 showLog("Clicked resetMapButton");
                 showToast("Resetting map...");
                 gridMap.resetMap();
+                receiveMsgTextView.append("\n" + "System: Resetting Map...");
+
             }
         });
 
@@ -514,28 +508,9 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
             }
         });
 
-//        sendMessageButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                showLog("Clicked sendMessageButton");
-//                String sentMessage = "" + sendMessageTextBox.getText().toString();
-//
-//                SharedPreferences.Editor editor = sharedPreferences.edit();
-//                editor.putString("message", sharedPreferences.getString("message", "") + '\n' + sentMessage);
-//                editor.commit();
-//                receiveMessageTextBox.setText(sharedPreferences.getString("message", ""));
-//                sendMessageTextBox.setText("");
-//
-//                /*if (BluetoothConnectionService.BluetoothConnectionStatus == true) {
-//                    byte[] bytes = sentMessage.getBytes(Charset.defaultCharset());
-//                    BluetoothConnectionService.write(bytes);
-//                }*/
-//                showLog("Exiting sendMessageButton");
-//            }
-//        });
-
         setViewAndChildrenEnabled(findViewById(R.id.constraintLayout),false);
     }
+
     // UI PART
     public static void sharedPreferences() {
         sharedPreferences = getSharedPreferences(context);
@@ -672,7 +647,6 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
     }
 
     //////////////// end of UI PART///////////////////////
-
 
 
 
@@ -907,5 +881,11 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
         setViewAndChildrenEnabled(findViewById(R.id.constraintLayout),!controlsLocked);
    }
 
+   public void sendObstaclesToAlgo(View view){
+        if (gridMap.om.size() != 0)
+            gridMap.om.printObstaclesArrayList();
+        else
+            Toast.makeText(MainActivity.this, "no obstacles to send...", Toast.LENGTH_SHORT).show();
+   }
 
 }

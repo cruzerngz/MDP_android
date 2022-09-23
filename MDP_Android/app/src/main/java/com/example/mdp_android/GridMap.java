@@ -484,7 +484,7 @@ public class GridMap extends View {
         robotBearingTextView.setText(direction);
     }
 
-    public static void sendObstacleInformation(int column, int row, String imageid, String face) {
+    public void sendObstacleInformation(int column, int row, String imageid, String face) {
         String x = String.valueOf(column-1);
         String y = String.valueOf(row-1);
         String obstacleImageID = imageid;
@@ -492,6 +492,8 @@ public class GridMap extends View {
 
         String info = "Coordinates: " + x + ", " + y + " | Direction: " + obstacleFace + " | ImageID: " + obstacleImageID;
         BTManager.instance.myBluetoothService.sendMessage(info);
+        TextView receiveMsgTextView = ((Activity)this.getContext()).findViewById(R.id.receiveMsgTextView);
+        receiveMsgTextView.append("\n" + info + "\n");
     }
 
     public void setObstacleCoord(int col, int row) {
@@ -690,7 +692,7 @@ public class GridMap extends View {
                     setObstacleCoord(endColumn, endRow);
 
                     if(!om.checkExists(tempID))
-                        om.addObstacle(new Obstacle(tempID,endColumn+"",endRow+"",tempBearing,""));
+                        om.addObstacle(new Obstacle(tempID,(endColumn-1)+"",(endRow-1)+"",tempBearing,""));
                     else
                         om.updateObstacle(tempID,endColumn+"",endRow+"",tempBearing,"");
                     sendObstacleInformation(endColumn, endRow, tempID, tempBearing);
@@ -817,7 +819,7 @@ public class GridMap extends View {
 
                             // assume new obstacle confirmed
                             if(!om.checkExists(newImageID))
-                                om.addObstacle(new Obstacle(newImageID,tCol+"",tRow+"",newObstacleBearing,""));
+                                om.addObstacle(new Obstacle(newImageID,(tCol-1)+"",(tRow-1)+"",newObstacleBearing,""));
                             else
                                 om.updateObstacle(newImageID,tCol+"",tRow+"",newObstacleBearing,"");
                             sendObstacleInformation(tCol, tRow, newImageID, newObstacleBearing);
@@ -912,26 +914,37 @@ public class GridMap extends View {
                     String imageID = (MainActivity.imageID).equals("0") ? "" : MainActivity.imageID;
                     String obstacleBearing = MainActivity.obstacleBearing;
 
-                    IMAGE_ID_LIST.get(row - 1)[column - 1] = imageID;
-                    OBSTACLE_BEARING_LIST.get(row - 1)[column - 1] = obstacleBearing;
 
-                    this.setObstacleCoord(column, row);
-                    // print msg here
+
+
 
                     if(!om.checkExists(imageID))
-                        om.addObstacle(new Obstacle(imageID,column+"",row+"",obstacleBearing,""));
-                    else
-                        om.updateObstacle(imageID,column+"",row+"",obstacleBearing,"");
+                    {
+                        IMAGE_ID_LIST.get(row - 1)[column - 1] = "";
+//                      IMAGE_ID_LIST.get(row - 1)[column - 1] = imageID;
+                        OBSTACLE_BEARING_LIST.get(row - 1)[column - 1] = obstacleBearing;
+                        this.setObstacleCoord(column, row);
 
-                    sendObstacleInformation(column, row, imageID, obstacleBearing);
+                        om.addObstacle(new Obstacle(imageID,(column-1)+"",(row-1)+"",obstacleBearing,""));
+                        sendObstacleInformation(column, row, imageID, obstacleBearing);
+                        showLog(commandMessageGenerator(ADD_OBSTACLE));
+                        this.invalidate();
+                    }
+
+                    else{
+//                        om.updateObstacle(imageID,column+"",row+"",obstacleBearing,"");
+                        TextView receiveMsgTextView = ((Activity)this.getContext()).findViewById(R.id.receiveMsgTextView);
+                        receiveMsgTextView.append("\n" + "ObstacleID already on map, Please choose other IDs!" + "\n");
+                        Toast.makeText(BTManager.instance.appCompatActivity, "ObstacleID already on map", Toast.LENGTH_SHORT).show();
+                    }
 
 //                    Log.e("GridMap","x y coordinate are: " + this.getObstacleCoord());
 
-                    showLog(commandMessageGenerator(ADD_OBSTACLE));
+
                     // commented out for Wk 8 and 9
                     //MainActivity.printMessage(commandMessageGenerator(ADD_OBSTACLE));
                 }
-                this.invalidate();
+
                 return true;
             }
 
@@ -2167,10 +2180,10 @@ public class GridMap extends View {
         om.updateObstacle(obstacleID,"","","",imageID);
         Obstacle temp = om.getObstacle(obstacleID);
         if(temp != null){
-            int y = Integer.parseInt(temp.y);
-            int x = Integer.parseInt(temp.x);
+            int y = Integer.parseInt(temp.y)+1;
+            int x = Integer.parseInt(temp.x)+1;
             IMAGE_ID_LIST.get(y - 1)[x - 1] = imageID;
-            om.getObstacle(obstacleID).obstacleID = imageID;
+            temp.imageID = imageID;
 
             this.invalidate();
             return true;

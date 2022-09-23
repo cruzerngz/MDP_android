@@ -83,7 +83,8 @@ public class DeviceListRecyclerAdapter extends RecyclerView.Adapter<DeviceListRe
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
 
         if (ActivityCompat.checkSelfPermission(MainActivity.ctx, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-            viewHolder.deviceTitle.setText(devicesArrList.get(i).getName());
+            viewHolder.deviceTitle.setText(devicesArrList.get(i).getName() + "\n");
+            viewHolder.deviceTitle.append(devicesArrList.get(i).getAddress());
             return;
         }
     }
