@@ -622,103 +622,107 @@ public class GridMap extends View {
     //Obstacle drag segment
     @Override
     public boolean onDragEvent(DragEvent dragEvent) {
-        showLog("Entering onDragEvent");
-        clipData = dragEvent.getClipData();
-        localState = dragEvent.getLocalState();
+        try {
+            showLog("Entering onDragEvent");
+            clipData = dragEvent.getClipData();
+            localState = dragEvent.getLocalState();
 
-        String tempID, tempBearing;
-        tempID = tempBearing = "";
-        endColumn = endRow = -999;
-        oldItem = IMAGE_ID_LIST.get(initialRow - 1)[initialColumn - 1];
-        showLog("dragEvent.getAction() == " + dragEvent.getAction());
-        showLog("dragEvent.getResult() is " + dragEvent.getResult());
-        showLog("initialColumn = " + initialColumn + ", initialRow = " + initialRow);
-
-        //If obstacle is dragged and dropped out of the gridmap
-        if ((dragEvent.getAction() == DragEvent.ACTION_DRAG_ENDED) && (endColumn == -999 || endRow == -999) && dragEvent.getResult() == false) {
-            for (int i = 0; i < obstacleCoord.size(); i++) {
-                if (Arrays.equals(obstacleCoord.get(i), new int[]{initialColumn - 1, initialRow - 1})) {
-                    obstacleCoord.remove(i);
-                }
-            }
-            // remove from Obstacles array List
-            om.removeObstacle(Integer.toString(initialColumn-1),Integer.toString(initialRow-1));
-            cells[initialColumn][20-initialRow].setType("unexplored");
-            IMAGE_ID_LIST.get(initialRow-1)[initialColumn-1] = "";
-            OBSTACLE_BEARING_LIST.get(initialRow-1)[initialColumn-1] = "";
-            showLog(commandMessageGenerator(REMOVE_OBSTACLE));
-            // commented out for Wk 8 and Wk 9
-//            MainActivity.printMessage(commandMessageGenerator(REMOVE_OBSTACLE));
-        }
-
-        //If obstacle is dropped within the gridmap
-        else if (dragEvent.getAction() == DragEvent.ACTION_DROP && this.getAutoUpdate() == false) {
-            endColumn = (int) (dragEvent.getX() / cellSize);
-            endRow = this.convertRow((int) (dragEvent.getY() / cellSize));
-
-            //If user clicked on an empty cell
-            if (IMAGE_ID_LIST.get(initialRow - 1)[initialColumn - 1].equals("") && OBSTACLE_BEARING_LIST.get(initialRow - 1)[initialColumn - 1].equals("")) {
-                showLog("Cell is empty");
-            }
+            String tempID, tempBearing;
+            tempID = tempBearing = "";
+            endColumn = endRow = -999;
+            oldItem = IMAGE_ID_LIST.get(initialRow - 1)[initialColumn - 1];
+            showLog("dragEvent.getAction() == " + dragEvent.getAction());
+            showLog("dragEvent.getResult() is " + dragEvent.getResult());
+            showLog("initialColumn = " + initialColumn + ", initialRow = " + initialRow);
 
             //If obstacle is dragged and dropped out of the gridmap
-            else if (endColumn <= 0 || endRow <= 0) {
+            if ((dragEvent.getAction() == DragEvent.ACTION_DRAG_ENDED) && (endColumn == -999 || endRow == -999) && dragEvent.getResult() == false) {
                 for (int i = 0; i < obstacleCoord.size(); i++) {
                     if (Arrays.equals(obstacleCoord.get(i), new int[]{initialColumn - 1, initialRow - 1})) {
                         obstacleCoord.remove(i);
                     }
                 }
-                cells[initialColumn][20-initialRow].setType("unexplored");
-                IMAGE_ID_LIST.get(initialRow-1)[initialColumn-1] = "";
-                OBSTACLE_BEARING_LIST.get(initialRow-1)[initialColumn-1] = "";
+                // remove from Obstacles array List
+                om.removeObstacle(Integer.toString(initialColumn - 1), Integer.toString(initialRow - 1));
+                cells[initialColumn][20 - initialRow].setType("unexplored");
+                IMAGE_ID_LIST.get(initialRow - 1)[initialColumn - 1] = "";
+                OBSTACLE_BEARING_LIST.get(initialRow - 1)[initialColumn - 1] = "";
                 showLog(commandMessageGenerator(REMOVE_OBSTACLE));
                 // commented out for Wk 8 and Wk 9
-//                MainActivity.printMessage(commandMessageGenerator(REMOVE_OBSTACLE));
+//            MainActivity.printMessage(commandMessageGenerator(REMOVE_OBSTACLE));
             }
 
-            //If obstacles is dropped on an empty cell, place it there unless there is an existing item
-            else if ((1 <= initialColumn && initialColumn <= 20) && (1 <= initialRow && initialRow <= 20) && (1 <= endColumn && endColumn <= 20) && (1 <= endRow && endRow <= 20)) {
-                tempID = IMAGE_ID_LIST.get(initialRow - 1)[initialColumn - 1];
-                tempBearing = OBSTACLE_BEARING_LIST.get(initialRow - 1)[initialColumn - 1];
+            //If obstacle is dropped within the gridmap
+            else if (dragEvent.getAction() == DragEvent.ACTION_DROP && this.getAutoUpdate() == false) {
+                endColumn = (int) (dragEvent.getX() / cellSize);
+                endRow = this.convertRow((int) (dragEvent.getY() / cellSize));
 
-                //Check if there is any obstacle is the desired drop cell
-                if (IMAGE_ID_LIST.get(endRow - 1)[endColumn - 1] != "" || OBSTACLE_BEARING_LIST.get(endRow - 1)[endColumn - 1] != "") {
-                    showLog("An obstacle is already at the drop location");
-                    Toast.makeText(BTManager.instance.appCompatActivity, "An obstacle is already at the drop location...", Toast.LENGTH_SHORT).show();
-
+                //If user clicked on an empty cell
+                if (IMAGE_ID_LIST.get(initialRow - 1)[initialColumn - 1].equals("") && OBSTACLE_BEARING_LIST.get(initialRow - 1)[initialColumn - 1].equals("")) {
+                    showLog("Cell is empty");
                 }
-                else {
-                    IMAGE_ID_LIST.get(initialRow - 1)[initialColumn - 1] = "";
-                    OBSTACLE_BEARING_LIST.get(initialRow - 1)[initialColumn - 1] = "";
-                    IMAGE_ID_LIST.get(endRow - 1)[endColumn - 1] = tempID;
 
-                    OBSTACLE_BEARING_LIST.get(endRow - 1)[endColumn - 1] = tempBearing;
-                    setObstacleCoord(endColumn, endRow);
-
-                    om.updateObstacle(om.getObstacle(Integer.toString(initialColumn-1),Integer.toString(initialRow-1)).obstacleID,(endColumn-1)+"",(endRow-1)+"",tempBearing,"");
-
-//                    sendObstacleInformation(endColumn, endRow, tempID, tempBearing);
-                    sendObstacleInformation(endColumn, endRow, om.getObstacle(Integer.toString(endColumn-1),Integer.toString(endRow-1)).obstacleID, tempBearing);
-
+                //If obstacle is dragged and dropped out of the gridmap
+                else if (endColumn <= 0 || endRow <= 0) {
                     for (int i = 0; i < obstacleCoord.size(); i++) {
                         if (Arrays.equals(obstacleCoord.get(i), new int[]{initialColumn - 1, initialRow - 1})) {
                             obstacleCoord.remove(i);
                         }
                     }
                     cells[initialColumn][20 - initialRow].setType("unexplored");
-                    showLog(commandMessageGenerator(MOVE_OBSTACLE));
+                    IMAGE_ID_LIST.get(initialRow - 1)[initialColumn - 1] = "";
+                    OBSTACLE_BEARING_LIST.get(initialRow - 1)[initialColumn - 1] = "";
+                    showLog(commandMessageGenerator(REMOVE_OBSTACLE));
                     // commented out for Wk 8 and Wk 9
+//                MainActivity.printMessage(commandMessageGenerator(REMOVE_OBSTACLE));
+                }
+
+                //If obstacles is dropped on an empty cell, place it there unless there is an existing item
+                else if ((1 <= initialColumn && initialColumn <= 20) && (1 <= initialRow && initialRow <= 20) && (1 <= endColumn && endColumn <= 20) && (1 <= endRow && endRow <= 20)) {
+                    tempID = IMAGE_ID_LIST.get(initialRow - 1)[initialColumn - 1];
+                    tempBearing = OBSTACLE_BEARING_LIST.get(initialRow - 1)[initialColumn - 1];
+
+                    //Check if there is any obstacle is the desired drop cell
+                    if (IMAGE_ID_LIST.get(endRow - 1)[endColumn - 1] != "" || OBSTACLE_BEARING_LIST.get(endRow - 1)[endColumn - 1] != "") {
+                        showLog("An obstacle is already at the drop location");
+                        Toast.makeText(BTManager.instance.appCompatActivity, "An obstacle is already at the drop location...", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        IMAGE_ID_LIST.get(initialRow - 1)[initialColumn - 1] = "";
+                        OBSTACLE_BEARING_LIST.get(initialRow - 1)[initialColumn - 1] = "";
+                        IMAGE_ID_LIST.get(endRow - 1)[endColumn - 1] = tempID;
+
+                        OBSTACLE_BEARING_LIST.get(endRow - 1)[endColumn - 1] = tempBearing;
+                        setObstacleCoord(endColumn, endRow);
+
+                        om.updateObstacle(om.getObstacle(Integer.toString(initialColumn - 1), Integer.toString(initialRow - 1)).obstacleID, (endColumn - 1) + "", (endRow - 1) + "", tempBearing, "");
+
+//                    sendObstacleInformation(endColumn, endRow, tempID, tempBearing);
+                        sendObstacleInformation(endColumn, endRow, om.getObstacle(Integer.toString(endColumn - 1), Integer.toString(endRow - 1)).obstacleID, tempBearing);
+
+                        for (int i = 0; i < obstacleCoord.size(); i++) {
+                            if (Arrays.equals(obstacleCoord.get(i), new int[]{initialColumn - 1, initialRow - 1})) {
+                                obstacleCoord.remove(i);
+                            }
+                        }
+                        cells[initialColumn][20 - initialRow].setType("unexplored");
+                        showLog(commandMessageGenerator(MOVE_OBSTACLE));
+                        // commented out for Wk 8 and Wk 9
 //                    MainActivity.printMessage(commandMessageGenerator(MOVE_OBSTACLE));
+                    }
+                } else {
+                    showLog("Drag event failed");
                 }
             }
-            else {
-                showLog("Drag event failed");
-            }
-        }
 
-        showLog("initialColumn = " + initialColumn + ", initialRow = " + initialRow + "\nendColumn = " + endColumn + ", endRow = " + endRow);
-        this.invalidate();
-        return true;
+            showLog("initialColumn = " + initialColumn + ", initialRow = " + initialRow + "\nendColumn = " + endColumn + ", endRow = " + endRow);
+            this.invalidate();
+            return true;
+        }
+        catch(Exception e){
+            Log.e("dfdf","FKU");
+            return false;
+        }
     }
 
     public void callInvalidate() {
