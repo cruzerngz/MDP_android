@@ -2170,6 +2170,7 @@ public class GridMap extends View {
             int y = Integer.parseInt(temp.y);
             int x = Integer.parseInt(temp.x);
             IMAGE_ID_LIST.get(y - 1)[x - 1] = imageID;
+            om.getObstacle(obstacleID).obstacleID = imageID;
 
             this.invalidate();
             return true;

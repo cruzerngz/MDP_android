@@ -56,12 +56,10 @@ public class ObstacleManager {
     public void updateObstacle(String obstacleID, String x, String y, String face, String imageID){
         for(Obstacle o : obstacles){
             if(o.obstacleID.equals(obstacleID)){
-
                 o.x = x.equals("") ? o.x : x;
                 o.y = y.equals("") ? o.y : y;
                 o.face = face.equals("") ? o.face : face;
                 o.imageID = x.equals("") ? o.imageID : imageID;
-
                 break;
             }
         }
