@@ -684,20 +684,21 @@ public class GridMap extends View {
                 //Check if there is any obstacle is the desired drop cell
                 if (IMAGE_ID_LIST.get(endRow - 1)[endColumn - 1] != "" || OBSTACLE_BEARING_LIST.get(endRow - 1)[endColumn - 1] != "") {
                     showLog("An obstacle is already at the drop location");
+                    Toast.makeText(BTManager.instance.appCompatActivity, "An obstacle is already at the drop location...", Toast.LENGTH_SHORT).show();
+
                 }
                 else {
                     IMAGE_ID_LIST.get(initialRow - 1)[initialColumn - 1] = "";
                     OBSTACLE_BEARING_LIST.get(initialRow - 1)[initialColumn - 1] = "";
                     IMAGE_ID_LIST.get(endRow - 1)[endColumn - 1] = tempID;
-                    OBSTACLE_BEARING_LIST.get(endRow - 1)[endColumn - 1] = tempBearing;
 
+                    OBSTACLE_BEARING_LIST.get(endRow - 1)[endColumn - 1] = tempBearing;
                     setObstacleCoord(endColumn, endRow);
 
-                    if(!om.checkExists(tempID))
-                        om.addObstacle(new Obstacle(tempID,(endColumn-1)+"",(endRow-1)+"",tempBearing,""));
-                    else
-                        om.updateObstacle(tempID,endColumn+"",endRow+"",tempBearing,"");
-                    sendObstacleInformation(endColumn, endRow, tempID, tempBearing);
+                    om.updateObstacle(om.getObstacle(Integer.toString(initialColumn-1),Integer.toString(initialRow-1)).obstacleID,(endColumn-1)+"",(endRow-1)+"",tempBearing,"");
+
+//                    sendObstacleInformation(endColumn, endRow, tempID, tempBearing);
+                    sendObstacleInformation(endColumn, endRow, om.getObstacle(Integer.toString(endColumn-1),Integer.toString(endRow-1)).obstacleID, tempBearing);
 
                     for (int i = 0; i < obstacleCoord.size(); i++) {
                         if (Arrays.equals(obstacleCoord.get(i), new int[]{initialColumn - 1, initialRow - 1})) {
@@ -823,7 +824,7 @@ public class GridMap extends View {
                             if(!om.checkExists(newImageID))
                                 om.addObstacle(new Obstacle(newImageID,(tCol-1)+"",(tRow-1)+"",newObstacleBearing,""));
                             else
-                                om.updateObstacle(newImageID,tCol+"",tRow+"",newObstacleBearing,"");
+                                om.updateObstacle(newImageID,(tCol-1)+"",(tRow-1)+"",newObstacleBearing,"");
                             sendObstacleInformation(tCol, tRow, newImageID, newObstacleBearing);
 
 

@@ -18,6 +18,16 @@ public class ObstacleManager {
        return null;
     }
 
+    public Obstacle getObstacle(String x, String y){
+        for(Obstacle o: obstacles){
+            if(o.x.equals(x) && o.y.equals(y)){
+                return o;
+            }
+        }
+
+        return null;
+    }
+
     public void clearObstacles(){
         Log.e("sadfd", "size was " + obstacles.size());
         obstacles.clear();
@@ -33,6 +43,14 @@ public class ObstacleManager {
     public boolean checkExists(String id){
         for(Obstacle o : obstacles){
             if(id.equals(o.obstacleID))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean checkExists(String x,String y){
+        for(Obstacle o : obstacles){
+            if(o.x.equals(x) && o.y.equals(y))
                 return true;
         }
         return false;
@@ -75,7 +93,7 @@ public class ObstacleManager {
                 o.x = x.equals("") ? o.x : x;
                 o.y = y.equals("") ? o.y : y;
                 o.face = face.equals("") ? o.face : face;
-                o.imageID = x.equals("") ? o.imageID : imageID;
+                o.imageID = imageID.equals("") ? o.imageID : imageID;
 
                 break;
             }
