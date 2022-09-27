@@ -706,69 +706,201 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
         btManager.onDestroy();
     }
 
-    public boolean checkCommand(String command){
-        if (!command.equals("")){ // at least 1 element inside
-            command = command.replaceAll("\\s", ""); // remove all in between spaces
-            String[] arrOfStr = command.split(",");
-            if (arrOfStr.length == 0){
+    private boolean isInteger(String s){
+        try{
+            int stringToInt = Integer.parseInt(s);
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }
+    }
+
+    public boolean handleMoveCommand(String realCommand){
+        if(!gridMap.isRobotOnMap()){
+            Log.e("TAG","Please place robot!");
+            Toast.makeText(this, "Please place robot!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (realCommand.length() == 0) // invalid command
+            return false;
+        else{
+            Character firstChar = realCommand.charAt(0);
+            // to get the distance
+            String temp = realCommand.substring(1);
+            boolean parsable = isInteger(temp);
+
+            if (!parsable){
                 return false;
             }
-            switch(arrOfStr[0]){
-                case "TARGET":
-                    if (arrOfStr.length == 3){
-                        updateObstacle(arrOfStr[1],arrOfStr[2]);
-                    }
-                    return true;
-                case "ROBOT":
-                    if (arrOfStr.length == 4){
-                        updateRobotPosition(arrOfStr[1],arrOfStr[2],arrOfStr[3]);
-                    }
-                    return true;
-                case "MOVE":
-                    if (arrOfStr.length == 2){
-                        handleMovement(arrOfStr[1]);
-                    }
-                    return true;
-                default:
-                    return false;
+
+            int distance = Integer.parseInt(temp);
+            int stepsToMove = distance/10;
+            if(firstChar == 'f'){
+                Log.e("MainActivity","Moving Forward");
+                appendMessage("Robot","Moving Forward...");
+                robotStatusTextView.setText("Moving Forward");
+                for (int i = stepsToMove; i > 0; i--){
+                    gridMap.moveRobot("forward");
+                }
+                updateRobotAxisAndBearing();
+
+            }
+            else if(firstChar == 'b'){
+                Log.e("MainActivity","Moving Backward");
+                appendMessage("Robot","Moving Backward...");
+                robotStatusTextView.setText("Moving Backward");
+                for (int i = stepsToMove; i > 0; i--){
+                    gridMap.moveRobot("back");
+                }
+                updateRobotAxisAndBearing();
+            }
+        }
+        return true;
+    }
+
+    public boolean handleTurnCommand(String realCommand){
+        Log.e("TAG","inside handleTurnCommand function");
+        Log.e("TAG","realCommand = "+ realCommand);
+        if (realCommand.length() < 3) {// invalid command
+            Log.e("TAG","Invalid Command 1");
+            return false;
+        }
+        else{
+            Log.e("TAG","inside else case");
+            String checkValidCommand = realCommand.substring(2); // <3 checks that this exists
+
+            boolean parsable = isInteger(checkValidCommand);
+            if (!parsable){
+                Log.e("TAG","not parsable");
+                return false;
+            }
+
+//            if (realCommand.charAt(1) != 'f' || realCommand.charAt(1) != 'b'){
+//                    Log.e("TAG","invalid command 2");
+//                    return false;
+//            }
+
+            Character check = realCommand.charAt(1);
+            Log.e("TAG","proceed to turn and move");
+
+            Character firstChar = realCommand.charAt(0);
+            String newCommand = realCommand.substring(1);
+            if (newCommand.length() == 0)
+                return false;
+
+            if (firstChar == 'l' && (check == 'f' || check == 'b')){ // turn left
+                Log.e("MainActivity","Turning Left");
+                appendMessage("Robot","Turning Left...");
+                robotStatusTextView.setText("Turning Left");
+                gridMap.moveRobot("left");
+                updateRobotAxisAndBearing();
+                return handleMoveCommand(newCommand);
+            }
+            else if (firstChar == 'r' && (check == 'f' || check == 'b')){ // turn right
+                Log.e("MainActivity","Turning Right");
+                appendMessage("Robot","Turning Right...");
+                robotStatusTextView.setText("Turning Right");
+                gridMap.moveRobot("right");
+                updateRobotAxisAndBearing();
+                return handleMoveCommand(newCommand);
             }
         }
         return false;
     }
 
-    public void handleMessage(String sender,String content){
-        String temp = content.trim();
-        boolean valid = checkCommand(temp);
-        if (!valid){
-            // append default message (no commands involved)
-            appendMessage(sender,temp);
+
+    public boolean fineControlMode(String realCommand){
+        Log.e("TAG", "inside fineControlMode function");
+        if (realCommand.length() == 0) // invalid command
+            return false;
+        else{
+            Character firstChar = realCommand.charAt(0);
+            if(firstChar == 'm'){ // move command
+                String newCommand = realCommand.substring(1);
+                return handleMoveCommand(newCommand);
+            }
+            else if(firstChar == 't'){ // turn command
+                String newCommand = realCommand.substring(1);
+                return handleTurnCommand(newCommand);
+            }
         }
-//        switch(temp){
-//            case "w":
-//                Log.e("MainActivity","Moving Forward");
-//                appendMessage("Robot","Moving Forward...");
-//                break;
-//            // update the ui buttons here also
-//            case "a":
-//                Log.e("MainActivity","Moving Backward");
-//                appendMessage("Robot","Moving Backward...");
-//                break;
-//            // update the ui buttons here also
-//            case "s":
-//                Log.e("MainActivity","Turning Left");
-//                appendMessage("Robot","Turning Left...");
-//                break;
-//            // update the ui buttons here also
-//            case "d":
-//                Log.e("MainActivity","Turning Right");
-//                appendMessage("Robot","Turning Right...");
-//                break;
-//            // update the ui buttons here also
-//
-//            default:
-//                appendMessage(sender,content);
-//                break;
-//        }
+
+        return false;
+    }
+
+    public boolean handleCommandTree(String command){
+        if (command.length() < 3) // example: /t; minimum length is 4
+            return false;
+        if (command.charAt(0) != '\\' || command.charAt(command.length()-1) != ';') // valid only if \ first character and ; last character
+            return false;
+        String stripped = command.substring(1, command.length()-1); // remove \ and ;
+        Character firstChar = stripped.charAt(0);
+
+        if (firstChar == 't'){
+            // toy car mode
+
+        }
+        else if (firstChar == 'f'){
+            // fine control mode
+            String newCommand = stripped.substring(1);
+            Log.e("TAG", newCommand);
+            return fineControlMode(newCommand);
+        }
+
+        return false;
+    }
+
+
+    public boolean checkCommand(String command){
+        if (handleCommandTree(command)){
+            return true;
+        }
+        if (!command.equals("")){ // at least 1 element inside
+            command = command.replaceAll("\\s", ""); // remove all in between spaces
+
+            String[] arrOfStr = command.split(",");
+                if (arrOfStr.length == 0){
+                    return false;
+                }
+                switch(arrOfStr[0]){
+                    case "TARGET":
+                        if (arrOfStr.length == 3){
+                            updateObstacle(arrOfStr[1],arrOfStr[2]);
+                        }
+                        return true;
+                    case "ROBOT":
+                        if (arrOfStr.length == 4){
+                            updateRobotPosition(arrOfStr[1],arrOfStr[2],arrOfStr[3]);
+                        }
+                        return true;
+                    case "MOVE":
+                        if (arrOfStr.length == 2){
+                            handleMovement(arrOfStr[1]);
+                        }
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        return false;
+    }
+
+    // Function to implement
+    public void updateObstacle(String obstacleNumber, String targetID){
+        // TO DO
+        boolean result = gridMap.updateObstaclesFromRPI(obstacleNumber,targetID);
+        if(result == true){
+            appendMessage("Robot", "Obstacle " + obstacleNumber + " identified as " + targetID+ "!");
+        }
+    }
+
+    public void updateRobotPosition(String x, String y, String direction){
+        // TO DO
+        gridMap.updateRobotPositionFromAlgo(Integer.parseInt(x),Integer.parseInt(y),direction);
+        appendMessage("Robot","Setting position...");
+        robotStatusTextView.setText("Setting New Position");
     }
 
     private void handleMovement(String content){
@@ -831,6 +963,15 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
         }
     }
 
+    public void handleMessage(String sender,String content){
+        String temp = content.trim();
+        boolean valid = checkCommand(temp);
+        if (!valid){
+            // append default message (no commands involved)
+            appendMessage(sender,temp);
+        }
+    }
+
     public void appendMessage(String sender, String s){
         // first message only
         if (receiveMsgTextView.getText() == ""){
@@ -858,22 +999,6 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
         sendMsgEditText.setText("");
     }
 
-
-    // Function to implement
-    public void updateObstacle(String obstacleNumber, String targetID){
-        // TO DO
-        boolean result = gridMap.updateObstaclesFromRPI(obstacleNumber,targetID);
-        if(result == true){
-            appendMessage("Robot", "Obstacle " + obstacleNumber + " identified as " + targetID+ "!");
-        }
-    }
-
-    public void updateRobotPosition(String x, String y, String direction){
-        // TO DO
-        gridMap.updateRobotPositionFromAlgo(Integer.parseInt(x),Integer.parseInt(y),direction);
-        appendMessage("Robot","Setting position...");
-        robotStatusTextView.setText("Setting New Position");
-    }
    @Override
    public void toggleLock() {
         controlsLocked = !controlsLocked;
@@ -882,8 +1007,13 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
    }
 
    public void sendObstaclesToAlgo(View view){
-        if (gridMap.om.size() != 0)
-            gridMap.om.printObstaclesArrayList();
+        if (gridMap.om.size() != 0) {
+            gridMap.om.logObstaclesArrayList();
+            String messageToSendAlgo = gridMap.om.sendObstaclesArrayList();
+            BTManager.instance.myBluetoothService.sendMessage(messageToSendAlgo);
+            Log.e("TAG",messageToSendAlgo);
+            receiveMsgTextView.append("\n" + "System: Sending to Algo: " + messageToSendAlgo);
+        }
         else
             Toast.makeText(MainActivity.this, "no obstacles to send...", Toast.LENGTH_SHORT).show();
    }

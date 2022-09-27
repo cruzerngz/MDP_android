@@ -491,7 +491,7 @@ public class GridMap extends View {
         String obstacleFace = face;
 
         String info = "Coordinates: " + x + ", " + y + " | Direction: " + obstacleFace + " | currentObstacleID: " + obstacleImageID;
-        BTManager.instance.myBluetoothService.sendMessage(info);
+//        BTManager.instance.myBluetoothService.sendMessage(info);
         TextView receiveMsgTextView = ((Activity)this.getContext()).findViewById(R.id.receiveMsgTextView);
         receiveMsgTextView.append("\n" + info + "\n");
     }

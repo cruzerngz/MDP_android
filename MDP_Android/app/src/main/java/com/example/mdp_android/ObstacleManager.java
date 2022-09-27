@@ -100,7 +100,7 @@ public class ObstacleManager {
         }
     }
 
-    public void printObstaclesArrayList(){
+    public void logObstaclesArrayList(){
         int count = 1;
         for (Obstacle o : obstacles){
             Log.e(TAG,"Obstacle number : " + count++);
@@ -111,6 +111,30 @@ public class ObstacleManager {
             Log.e(TAG,"Obstacle imageID: " + o.imageID);
         }
     }
+
+    public String sendObstaclesArrayList(){
+        String message = "";
+        int count = 0;
+
+        // x-coor,y-coor,face,obstacleID
+        for (Obstacle o : obstacles){
+            count++;
+            message += o.x + " ";
+            message += o.y + " ";
+            message += o.face + " ";
+            message += o.obstacleID + " ";
+            if (obstacles.size() == count){
+                message += "";
+            }
+            else{
+                message += ",";
+            }
+
+        }
+        return message;
+    }
+
+
 
     public int size(){
         return obstacles.size();
