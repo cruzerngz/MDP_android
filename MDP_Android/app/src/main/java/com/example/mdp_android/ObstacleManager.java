@@ -126,16 +126,16 @@ public class ObstacleManager {
 
             switch(o.face){
                 case "North":
-                    message += 0;
-                    break;
-                case "South":
-                    message += 180;
-                    break;
-                case "East":
                     message += 90;
                     break;
-                case "West":
+                case "South":
                     message += 270;
+                    break;
+                case "East":
+                    message += 0;
+                    break;
+                case "West":
+                    message += 180;
                     break;
                 default:
                     break;

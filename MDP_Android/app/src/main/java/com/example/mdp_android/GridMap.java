@@ -1400,19 +1400,19 @@ public class GridMap extends View {
             showLog("within grid");
             robotBearing = (robotBearing.equals("None")) ? "North" : robotBearing;
             switch (direction) {
-                case "0":
+                case "90":
                     robotBearing = "North";
                     break;
 
-                case "180":
+                case "270":
                     robotBearing = "South";
                     break;
 
-                case "90":
+                case "0":
                     robotBearing = "East";
                     break;
 
-                case "270":
+                case "180":
                     robotBearing = "West";
                     break;
             }

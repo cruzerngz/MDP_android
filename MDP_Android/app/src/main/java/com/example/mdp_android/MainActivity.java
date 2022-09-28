@@ -1018,16 +1018,16 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
             String robotBearingDegrees = "";
             switch (robotBearing){
                 case "North":
-                    robotBearingDegrees = "0";
-                    break;
-                case "South":
-                    robotBearingDegrees = "180";
-                    break;
-                case "East":
                     robotBearingDegrees = "90";
                     break;
-                case "West":
+                case "South":
                     robotBearingDegrees = "270";
+                    break;
+                case "East":
+                    robotBearingDegrees = "0";
+                    break;
+                case "West":
+                    robotBearingDegrees = "180";
                     break;
                 default:
                     break;
@@ -1043,6 +1043,7 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
         if (gridMap.om.size() != 0) {
             gridMap.om.logObstaclesArrayList();
             String messageToSendAlgo = gridMap.om.sendObstaclesArrayList();
+            messageToSendAlgo = "ALG:" + messageToSendAlgo;
             BTManager.instance.myBluetoothService.sendMessage(messageToSendAlgo);
             Log.e("TAG",messageToSendAlgo);
             receiveMsgTextView.append("\n" + "System: Sending to Algo: " + messageToSendAlgo);
