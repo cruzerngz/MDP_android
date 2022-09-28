@@ -1400,19 +1400,19 @@ public class GridMap extends View {
             showLog("within grid");
             robotBearing = (robotBearing.equals("None")) ? "North" : robotBearing;
             switch (direction) {
-                case "N":
+                case "0":
                     robotBearing = "North";
                     break;
 
-                case "S":
+                case "180":
                     robotBearing = "South";
                     break;
 
-                case "E":
+                case "90":
                     robotBearing = "East";
                     break;
 
-                case "W":
+                case "270":
                     robotBearing = "West";
                     break;
             }
@@ -1432,7 +1432,7 @@ public class GridMap extends View {
         }
 
         //If robot is still within grid
-        if ((x > 1 && x < 21) && (y > -1 && y < 20)) {
+        if ((x > 1 && x < 21) && (y > -1 && y < 20) ) {
             showLog("Robot is within grid");
             setCurCoord(x+1, y+1, robotBearing);
             canDrawRobot = true;

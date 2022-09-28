@@ -898,6 +898,11 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
 
     public void updateRobotPosition(String x, String y, String direction){
         // TO DO
+        if(!gridMap.isRobotOnMap()){
+            Log.e("TAG","Please place robot!");
+            Toast.makeText(this, "Please place robot!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         gridMap.updateRobotPositionFromAlgo(Integer.parseInt(x),Integer.parseInt(y),direction);
         appendMessage("Robot","Setting position...");
         robotStatusTextView.setText("Setting New Position");
@@ -1007,6 +1012,34 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
    }
 
    public void sendObstaclesToAlgo(View view){
+        if (gridMap.isRobotOnMap()){
+            int[] robotPosition = gridMap.getCurCoord();
+            String robotBearing = gridMap.getRobotBearing();
+            String robotBearingDegrees = "";
+            switch (robotBearing){
+                case "North":
+                    robotBearingDegrees = "0";
+                    break;
+                case "South":
+                    robotBearingDegrees = "180";
+                    break;
+                case "East":
+                    robotBearingDegrees = "90";
+                    break;
+                case "West":
+                    robotBearingDegrees = "270";
+                    break;
+                default:
+                    break;
+            }
+            String x = String.valueOf(robotPosition[0] - 1);
+            String y = String.valueOf(robotPosition[1] - 1);
+            String robotInfo = x + " " + y + " " + robotBearingDegrees;
+
+            Log.e("TAG","Current Robot Bearing and Face: " + robotInfo);
+            BTManager.instance.myBluetoothService.sendMessage(robotInfo);
+            receiveMsgTextView.append("\n" + "System: Current Robot Bearing: " + robotInfo);
+        }
         if (gridMap.om.size() != 0) {
             gridMap.om.logObstaclesArrayList();
             String messageToSendAlgo = gridMap.om.sendObstaclesArrayList();

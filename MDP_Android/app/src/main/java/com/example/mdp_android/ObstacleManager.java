@@ -121,8 +121,26 @@ public class ObstacleManager {
             count++;
             message += o.x + " ";
             message += o.y + " ";
-            message += o.face + " ";
             message += o.obstacleID + " ";
+//            message += o.face + " ";
+
+            switch(o.face){
+                case "North":
+                    message += 0;
+                    break;
+                case "South":
+                    message += 180;
+                    break;
+                case "East":
+                    message += 90;
+                    break;
+                case "West":
+                    message += 270;
+                    break;
+                default:
+                    break;
+            }
+
             if (obstacles.size() == count){
                 message += "";
             }
