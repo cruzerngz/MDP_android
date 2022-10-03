@@ -43,6 +43,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 public class GridMap extends View {
+    boolean printRobotCoord = false;
     public GridMap(Context c) {
         super(c);
         initMap();
@@ -166,9 +167,14 @@ public class GridMap extends View {
         drawGridNumber(canvas);
         if (getCanDrawRobot()) {
             drawRobot(canvas, curCoord);
-            String robotCoord = "my Coordinates are: [" + (curCoord[0] - 1) + "," + (curCoord[1] - 1) + "]";
-            Log.e("GridMap", robotCoord);
-            BTManager.instance.passMessageToMessageInterface("Robot",robotCoord);
+
+            if (printRobotCoord == false){
+                String robotCoord = "my Coordinates are: [" + (curCoord[0] - 1) + "," + (curCoord[1] - 1) + "]\n";
+                Log.e("GridMap", robotCoord);
+                BTManager.instance.passMessageToMessageInterface("Robot",robotCoord);
+                printRobotCoord = true;
+            }
+
         }
         drawArrow(canvas, arrowCoord);
         drawObstacles(canvas);
