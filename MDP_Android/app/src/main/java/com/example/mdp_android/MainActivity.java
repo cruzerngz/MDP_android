@@ -433,13 +433,24 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
                     timerHandler.removeCallbacks(imageRecognitionTimerRunnable);
                 }
                 else if (imageRecognitionToggle.getText().equals("STOP")) {
-                    String message = gridMap.getObstacles();
+                    //String message = gridMap.getObstacles();
                     //printMessage(message);
+                    if (gridMap.isRobotOnMap() && gridMap.om.size() != 0){
+                        sendObstaclesToAlgo();
+                    }
+                    else{
+                        Toast.makeText(MainActivity.this, "no obstacles to send or robot not on map...", Toast.LENGTH_SHORT).show();
+                        stopImageRecognitionTimerFlag = false;
+                        showToast("IR mode unable to start");
+                        robotStatusTextView.setText("IR MODE unable to start");
+                        return;
+                    }
                     stopImageRecognitionTimerFlag = false;
                     showToast("IR mode started");
                     robotStatusTextView.setText("IR MODE");
                     imageRecognitionTimer = System.currentTimeMillis();
                     timerHandler.postDelayed(imageRecognitionTimerRunnable, 0);
+                    // send obstacles to algo
                 }
                 else {
                     showToast("Else statement: " + imageRecognitionToggle.getText());
@@ -860,6 +871,10 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
         if (!command.equals("")){ // at least 1 element inside
             command = command.replaceAll("\\s", ""); // remove all in between spaces
 
+            if (command.indexOf("ALG:") == 0) {
+                command = command.substring(4);
+            }
+
             String[] arrOfStr = command.split(",");
                 if (arrOfStr.length == 0){
                     return false;
@@ -1012,6 +1027,7 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
    }
 
    public void sendObstaclesToAlgo(View view){
+        String robotInfo = "";
         if (gridMap.isRobotOnMap()){
             int[] robotPosition = gridMap.getCurCoord();
             String robotBearing = gridMap.getRobotBearing();
@@ -1034,22 +1050,73 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
             }
             String x = String.valueOf(robotPosition[0] - 1);
             String y = String.valueOf(robotPosition[1] - 1);
-            String robotInfo = x + " " + y + " " + robotBearingDegrees;
+            robotInfo = x + " " + y + " " + robotBearingDegrees;
 
             Log.e("TAG","Current Robot Bearing and Face: " + robotInfo);
-            BTManager.instance.myBluetoothService.sendMessage(robotInfo);
-            receiveMsgTextView.append("\n" + "System: Current Robot Bearing: " + robotInfo);
+//            BTManager.instance.myBluetoothService.sendMessage(robotInfo);
+//            receiveMsgTextView.append("\n" + "System: Current Robot Bearing: " + robotInfo);
         }
-        if (gridMap.om.size() != 0) {
+        else{
+            Toast.makeText(MainActivity.this, "Please place robot...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (gridMap.om.size() != 0 && gridMap.isRobotOnMap()) {
             gridMap.om.logObstaclesArrayList();
             String messageToSendAlgo = gridMap.om.sendObstaclesArrayList();
-            messageToSendAlgo = "ALG:" + messageToSendAlgo;
+            messageToSendAlgo = "ALG:" + robotInfo + ", "+ messageToSendAlgo;
             BTManager.instance.myBluetoothService.sendMessage(messageToSendAlgo);
             Log.e("TAG",messageToSendAlgo);
             receiveMsgTextView.append("\n" + "System: Sending to Algo: " + messageToSendAlgo);
         }
         else
-            Toast.makeText(MainActivity.this, "no obstacles to send...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "no obstacles to send or robot not on map...", Toast.LENGTH_SHORT).show();
    }
+
+
+    public void sendObstaclesToAlgo(){
+        String robotInfo = "";
+        if (gridMap.isRobotOnMap()){
+            int[] robotPosition = gridMap.getCurCoord();
+            String robotBearing = gridMap.getRobotBearing();
+            String robotBearingDegrees = "";
+            switch (robotBearing){
+                case "North":
+                    robotBearingDegrees = "90";
+                    break;
+                case "South":
+                    robotBearingDegrees = "270";
+                    break;
+                case "East":
+                    robotBearingDegrees = "0";
+                    break;
+                case "West":
+                    robotBearingDegrees = "180";
+                    break;
+                default:
+                    break;
+            }
+            String x = String.valueOf(robotPosition[0] - 1);
+            String y = String.valueOf(robotPosition[1] - 1);
+            robotInfo = x + " " + y + " " + robotBearingDegrees;
+
+            Log.e("TAG","Current Robot Bearing and Face: " + robotInfo);
+//            BTManager.instance.myBluetoothService.sendMessage(robotInfo);
+//            receiveMsgTextView.append("\n" + "System: Current Robot Bearing: " + robotInfo);
+        }
+        else{
+            Toast.makeText(MainActivity.this, "Please place robot...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (gridMap.om.size() != 0 && gridMap.isRobotOnMap()) {
+            gridMap.om.logObstaclesArrayList();
+            String messageToSendAlgo = gridMap.om.sendObstaclesArrayList();
+            messageToSendAlgo = "ALG:" + robotInfo + ", "+ messageToSendAlgo;
+            BTManager.instance.myBluetoothService.sendMessage(messageToSendAlgo);
+            Log.e("TAG",messageToSendAlgo);
+            receiveMsgTextView.append("\n" + "System: Sending to Algo: " + messageToSendAlgo);
+        }
+        else
+            Toast.makeText(MainActivity.this, "no obstacles to send or robot not on map...", Toast.LENGTH_SHORT).show();
+    }
 
 }

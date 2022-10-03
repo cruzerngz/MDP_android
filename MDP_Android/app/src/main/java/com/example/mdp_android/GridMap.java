@@ -166,6 +166,9 @@ public class GridMap extends View {
         drawGridNumber(canvas);
         if (getCanDrawRobot()) {
             drawRobot(canvas, curCoord);
+            String robotCoord = "my Coordinates are: [" + (curCoord[0] - 1) + "," + (curCoord[1] - 1) + "]";
+            Log.e("GridMap", robotCoord);
+            BTManager.instance.passMessageToMessageInterface("Robot",robotCoord);
         }
         drawArrow(canvas, arrowCoord);
         drawObstacles(canvas);
