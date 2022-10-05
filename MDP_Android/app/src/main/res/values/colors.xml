@@ -12,6 +12,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="group1">#4682B4</color>
+    <color name="group2">#00688B</color>
+    <color name="group3">#03A89E</color>
+    <color name="smoke_white">#0F5F5F5</color>
+
+
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
     <color name="colorRed">#FF0000</color>

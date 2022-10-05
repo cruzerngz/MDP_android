@@ -126,7 +126,7 @@ public class GridMap extends View {
         redPaint.setColor(Color.RED);
         redPaint.setStrokeWidth(3);
         obstacleColor.setColor(Color.BLACK);
-        robotColor.setColor(Color.YELLOW);
+        robotColor.setColor(Color.GREEN);
         endColor.setColor(Color.RED);
         startColor.setColor(Color.CYAN);
         unexploredColor.setColor(Color.LTGRAY);
@@ -256,19 +256,44 @@ public class GridMap extends View {
         showLog("Entering drawGridNumber");
         for (int x = 1; x <= COL; x++) {
             if (x <= 10) {
-                canvas.drawText(Integer.toString(x - 1), cells[x][20].startX + (cellSize / 4), cells[x][20].startY + (cellSize / 2), blackPaint);
+                if (x % 2 == 0){
+                    canvas.drawText(Integer.toString(x - 1), cells[x][20].startX + (cellSize / 4), cells[x][20].startY + (cellSize / 2), redPaint);
+
+                }
+                else{
+                    canvas.drawText(Integer.toString(x - 1), cells[x][20].startX + (cellSize / 4), cells[x][20].startY + (cellSize / 2), blackPaint);
+                }
+//                canvas.drawText(Integer.toString(x - 1), cells[x][20].startX + (cellSize / 4), cells[x][20].startY + (cellSize / 2), blackPaint);
             }
             else {
-                canvas.drawText(Integer.toString(x - 1), cells[x][20].startX + (cellSize / 5), cells[x][20].startY + (cellSize / 2), blackPaint);
+                //canvas.drawText(Integer.toString(x - 1), cells[x][20].startX + (cellSize / 5), cells[x][20].startY + (cellSize / 2), blackPaint);
+                if (x % 2 == 0){
+                    canvas.drawText(Integer.toString(x - 1), cells[x][20].startX + (cellSize / 5), cells[x][20].startY + (cellSize / 2), redPaint);
+                }
+                else{
+                    canvas.drawText(Integer.toString(x - 1), cells[x][20].startX + (cellSize / 5), cells[x][20].startY + (cellSize / 2), blackPaint);
+                }
             }
         }
 
         for (int y = 0; y < ROW; y++) {
             if (y <= 9) { //Counting from top to down
-                canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 3.5f), cells[0][y].startY + (cellSize / 1.5f), blackPaint);
+                //canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 3.5f), cells[0][y].startY + (cellSize / 1.5f), blackPaint);
+                if (y % 2 == 0){
+                    canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 3.5f), cells[0][y].startY + (cellSize / 1.5f), redPaint);
+                }
+                else{
+                    canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 3.5f), cells[0][y].startY + (cellSize / 1.5f), blackPaint);
+                }
             }
             else {
-                canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 2), cells[0][y].startY + (cellSize / 1.5f), blackPaint);
+                //canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 2), cells[0][y].startY + (cellSize / 1.5f), blackPaint);
+                if (y % 2 == 0){
+                    canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 2), cells[0][y].startY + (cellSize / 1.5f), redPaint);
+                }
+                else{
+                    canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 2), cells[0][y].startY + (cellSize / 1.5f), blackPaint);
+                }
             }
         }
         showLog("Exiting drawGridNumber");

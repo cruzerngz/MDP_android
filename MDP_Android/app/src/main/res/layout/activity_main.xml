@@ -215,7 +215,8 @@
                         android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="15dp"
-                        android:foreground="@drawable/up_arrow" />
+                        android:foreground="@drawable/blue_up_arrow"
+                        />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -227,6 +228,7 @@
                             android:layout_height="wrap_content">
 
                             <Button
+                                
                                 android:id="@+id/leftButton"
                                 style="?android:attr/borderlessButtonStyle"
                                 android:layout_width="50dp"
@@ -234,7 +236,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginStart="10dp"
                                 app:layout_constraintLeft_toLeftOf="@id/leftRightArrowConstraint"
-                                android:foreground="@drawable/left_arrow" />
+                                android:foreground="@drawable/blue_left_arrow" />
 
                             <Button
                                 android:id="@+id/rightButton"
@@ -244,7 +246,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginEnd="10dp"
                                 app:layout_constraintRight_toRightOf="@id/leftRightArrowConstraint"
-                                android:foreground="@drawable/right_arrow" />
+                                android:foreground="@drawable/blue_right_arrow" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </LinearLayout>
 
@@ -254,7 +256,7 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center"
-                        android:foreground="@drawable/down_arrow" />
+                        android:foreground="@drawable/blue_down_arrow" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -284,12 +286,13 @@
                             android:id="@+id/addObstacleButton"
                             android:layout_width="155dp"
                             android:layout_height="50dp"
-                            android:backgroundTint="@color/toggle_button_color"
+                            android:backgroundTint="@color/group1"
                             android:text="ADD OBSTACLE"
                             android:textSize="14sp"
                             android:textAlignment="center"
                             android:textColor="@color/colorBlack"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="180dp"
@@ -355,7 +358,7 @@
                             android:id="@+id/resetMapButton"
                             android:layout_width="155dp"
                             android:layout_height="50dp"
-                            android:backgroundTint="@color/toggle_button_color"
+                            android:backgroundTint="@color/group1"
                             android:text="RESET MAP"
                             android:textAlignment="center"
                             android:textColor="@color/colorBlack"
@@ -414,7 +417,7 @@
                             android:id="@+id/startPointToggle"
                             android:layout_width="150dp"
                             android:layout_height="50dp"
-                            android:backgroundTint="@color/toggle_button_color"
+                            android:backgroundTint="@color/group1"
                             android:textOff="PLACE ROBOT"
                             android:textOn="CANCEL"
                             android:textSize="14sp"
@@ -432,6 +435,7 @@
 <!--                        android:orientation="horizontal">-->
 
 <!--                        <ToggleButton-->
+
 <!--                            android:id="@+id/startPointToggle"-->
 <!--                            android:layout_width="165dp"-->
 <!--                            android:layout_height="60dp"-->
@@ -457,7 +461,7 @@
                             android:layout_width="165dp"
                             android:layout_height="55dp"
                             android:layout_marginEnd="16dp"
-                            android:backgroundTint="@color/toggle_button_color"
+                            android:backgroundTint="@color/group2"
                             android:textAlignment="center"
                             android:textColor="@color/colorBlack"
                             android:textOff="IMAGE RECOGNITION MODE"
@@ -474,7 +478,7 @@
                                 android:layout_width="165dp"
                                 android:layout_height="28dp"
                                 android:gravity="center"
-                                android:background="@color/toolbarColor"
+                                android:background="@color/group2"
                                 app:layout_constraintBottom_toTopOf="@+id/imageRecognitionTimeTextView"
                                 android:text="IR TIME"
                                 android:textAlignment="center"
@@ -487,7 +491,7 @@
                                 android:layout_width="165dp"
                                 android:layout_height="28dp"
                                 android:gravity="center"
-                                android:background="@android:color/darker_gray"
+                                android:background="@color/smoke_white"
                                 app:layout_constraintTop_toBottomOf="@+id/imageRecognitionTimeLabel"
                                 android:text="00:00"
                                 android:textSize="12sp"
@@ -501,7 +505,7 @@
                             android:layout_width="160dp"
                             android:layout_height="50dp"
                             android:layout_marginStart="16dp"
-                            android:backgroundTint="@color/button_color"
+                            android:backgroundTint="@color/group2"
                             android:text="RESET IR TIME"
                             android:textStyle="bold"
                             android:textColor="@color/colorBlack"
@@ -523,10 +527,10 @@
                             android:layout_width="165dp"
                             android:layout_height="50dp"
                             android:layout_marginEnd="16dp"
-                            android:backgroundTint="@color/toggle_button_color"
+                            android:backgroundTint="@color/group3"
                             android:textOff="FASTEST CAR MODE"
                             android:textOn="STOP"
-                            android:textColor="@color/colorBlack"
+                            android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textAlignment="center"
                             android:textStyle="bold"/>
@@ -540,9 +544,9 @@
                                 android:layout_width="165dp"
                                 android:layout_height="28dp"
                                 android:gravity="center"
-                                android:background="@color/toolbarColor"
+                                android:background="@color/group3"
                                 app:layout_constraintBottom_toTopOf="@+id/fastestCarTimeTextView"
-                                android:text="IR TIME"
+                                android:text="FC TIME"
                                 android:textAlignment="center"
                                 android:textStyle="normal"
                                 android:textSize="14sp"
@@ -553,7 +557,7 @@
                                 android:layout_width="165dp"
                                 android:layout_height="28dp"
                                 android:gravity="center"
-                                android:background="@android:color/darker_gray"
+                                android:background="@color/smoke_white"
                                 app:layout_constraintTop_toBottomOf="@+id/fastestCarTimeLabel"
                                 android:text="00:00"
                                 android:textSize="12sp"
@@ -567,7 +571,7 @@
                             android:layout_width="160dp"
                             android:layout_height="50dp"
                             android:layout_marginStart="16dp"
-                            android:backgroundTint="@color/button_color"
+                            android:backgroundTint="@color/group3"
                             android:text="RESET FC TIME"
                             android:textAlignment="center"
                             android:textColor="@color/colorBlack"
@@ -652,21 +656,21 @@
                         app:layout_constraintTop_toBottomOf="@+id/sendMsgEditText" />
 
 
-                    <Button
-                        android:id="@+id/sendObstaclesToAlgo"
-                        android:layout_width="250dp"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="50dp"
-                        android:backgroundTint="@color/button_color"
-                        android:onClick="sendObstaclesToAlgo"
-                        android:text="SEND OBSTACLES"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="@+id/communicationActivityConstraint"
-                        app:layout_constraintTop_toBottomOf="@id/sendMsgEditText"
-                         />
+<!--                    <Button-->
+<!--                        android:id="@+id/sendObstaclesToAlgo"-->
+<!--                        android:layout_width="250dp"-->
+<!--                        android:layout_height="40dp"-->
+<!--                        android:layout_marginTop="50dp"-->
+<!--                        android:backgroundTint="@color/button_color"-->
+<!--                        android:onClick="sendObstaclesToAlgo"-->
+<!--                        android:text="SEND OBSTACLES"-->
+<!--                        android:textAlignment="center"-->
+<!--                        android:textColor="@color/colorBlack"-->
+<!--                        android:textSize="14sp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        app:layout_constraintLeft_toLeftOf="@+id/communicationActivityConstraint"-->
+<!--                        app:layout_constraintTop_toBottomOf="@id/sendMsgEditText"-->
+<!--                         />-->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>

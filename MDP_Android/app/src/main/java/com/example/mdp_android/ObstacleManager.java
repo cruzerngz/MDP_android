@@ -121,7 +121,7 @@ public class ObstacleManager {
             count++;
             message += o.x + " ";
             message += o.y + " ";
-            message += o.obstacleID + " ";
+
 //            message += o.face + " ";
 
             switch(o.face){
@@ -140,6 +140,8 @@ public class ObstacleManager {
                 default:
                     break;
             }
+
+            message += " " + o.obstacleID;
 
             if (obstacles.size() == count){
                 message += "";
