@@ -169,7 +169,7 @@ public class GridMap extends View {
             drawRobot(canvas, curCoord);
 
             if (printRobotCoord == false){
-                String robotCoord = "my Coordinates are: [" + (curCoord[0] - 1) + "," + (curCoord[1] - 1) + "]\n";
+                String robotCoord = "my Coordinates are: [" + (curCoord[0] - 1) + "," + (curCoord[1] - 1) + "]";
                 Log.e("GridMap", robotCoord);
                 BTManager.instance.passMessageToMessageInterface("Robot",robotCoord);
                 printRobotCoord = true;

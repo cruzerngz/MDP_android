@@ -1063,7 +1063,7 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
         if (gridMap.om.size() != 0 && gridMap.isRobotOnMap()) {
             gridMap.om.logObstaclesArrayList();
             String messageToSendAlgo = gridMap.om.sendObstaclesArrayList();
-            messageToSendAlgo = "ALG:" + robotInfo + ", "+ messageToSendAlgo;
+            messageToSendAlgo = "ALG:" + robotInfo + ","+ messageToSendAlgo;
             BTManager.instance.myBluetoothService.sendMessage(messageToSendAlgo);
             Log.e("TAG",messageToSendAlgo);
             receiveMsgTextView.append("\n" + "System: Sending to Algo: " + messageToSendAlgo);
@@ -1110,7 +1110,7 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
         if (gridMap.om.size() != 0 && gridMap.isRobotOnMap()) {
             gridMap.om.logObstaclesArrayList();
             String messageToSendAlgo = gridMap.om.sendObstaclesArrayList();
-            messageToSendAlgo = "ALG:" + robotInfo + ", "+ messageToSendAlgo;
+            messageToSendAlgo = "ALG:" + robotInfo + ","+ messageToSendAlgo;
             BTManager.instance.myBluetoothService.sendMessage(messageToSendAlgo);
             Log.e("TAG",messageToSendAlgo);
             receiveMsgTextView.append("\n" + "System: Sending to Algo: " + messageToSendAlgo);
