@@ -42,7 +42,6 @@
             android:layout_marginTop="60dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/wallpaperColor"
             android:orientation="vertical">
 
             <LinearLayout
@@ -110,7 +109,8 @@
                         android:textAlignment="center"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp"
-                        android:textStyle="normal" />
+                        android:textStyle="normal"
+                        android:fontFamily="@font/sharetech_regular"/>
 
                     <TextView
                         android:id="@+id/robotStatusTextView"
@@ -122,7 +122,8 @@
                         android:textAlignment="center"
                         android:textColor="@color/colorBlack"
                         android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:fontFamily="@font/sharetech_regular"/>
 
                     <TextView
                         android:id="@+id/robotBearingLabel"
@@ -134,7 +135,8 @@
                         android:textAlignment="center"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp"
-                        android:textStyle="normal" />
+                        android:textStyle="normal"
+                        android:fontFamily="@font/sharetech_regular"/>
 
                     <TextView
                         android:id="@+id/robotBearingTextView"
@@ -146,7 +148,8 @@
                         android:textAlignment="center"
                         android:textColor="@color/colorBlack"
                         android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:fontFamily="@font/sharetech_regular"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -162,7 +165,8 @@
                             android:text="X Axis:"
                             android:textAlignment="center"
                             android:textColor="@color/colorBlack"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:fontFamily="@font/sharetech_regular"/>
 
                         <TextView
                             android:id="@+id/robotXTextView"
@@ -174,7 +178,8 @@
                             android:textAlignment="center"
                             android:textColor="@color/colorBlack"
                             android:textSize="14sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:fontFamily="@font/sharetech_regular"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -193,7 +198,8 @@
                             android:textAlignment="center"
                             android:textColor="@color/colorBlack"
                             android:textSize="16sp"
-                            android:textStyle="normal" />
+                            android:textStyle="normal"
+                            android:fontFamily="@font/sharetech_regular"/>
 
                         <TextView
                             android:id="@+id/robotYTextView"
@@ -205,7 +211,8 @@
                             android:textAlignment="center"
                             android:textColor="@color/colorBlack"
                             android:textSize="14sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:fontFamily="@font/sharetech_regular"/>
                     </LinearLayout>
 
                     <Button
@@ -282,16 +289,17 @@
                         android:baselineAligned="false"
                         android:orientation="horizontal">
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/addObstacleButton"
                             android:layout_width="155dp"
-                            android:layout_height="50dp"
-                            android:backgroundTint="@color/group1"
+                            android:layout_height="40dp"
                             android:text="ADD OBSTACLE"
                             android:textSize="14sp"
                             android:textAlignment="center"
                             android:textColor="@color/colorBlack"
                             android:textStyle="bold"
+                            android:fontFamily="@font/sharetech_regular"
+                            android:background="@drawable/roundborder_group1"
                             />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -308,7 +316,8 @@
                                 android:text="Image ID:"
                                 android:textSize="16sp"
                                 android:textColor="@color/colorBlack"
-                                android:textStyle="bold"/>
+                                android:textStyle="bold"
+                                android:fontFamily="@font/sharetech_regular"/>
 
                             <TextView
                                 android:id="@+id/obstacleBearingLabel"
@@ -319,7 +328,9 @@
                                 android:text="Obstacle Bearing:"
                                 android:textSize="16sp"
                                 android:textColor="@color/colorBlack"
-                                android:textStyle="bold"/>
+                                android:textStyle="bold"
+                                android:fontFamily="@font/sharetech_regular"/>
+
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -354,76 +365,82 @@
                         android:baselineAligned="false"
                         android:orientation="horizontal">
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/resetMapButton"
                             android:layout_width="155dp"
-                            android:layout_height="50dp"
+                            android:layout_height="40dp"
                             android:backgroundTint="@color/group1"
                             android:text="RESET MAP"
                             android:textAlignment="center"
                             android:textColor="@color/colorBlack"
                             android:textSize="14sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:fontFamily="@font/sharetech_regular"
+                            android:background="@drawable/roundborder_group1"
+                            />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="130dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp">
 
-                            <TextView
-                                android:id="@+id/editObstacleLabel"
-                                android:layout_width="match_parent"
-                                android:layout_height="30dp"
-                                android:gravity="end|center_vertical"
-                                app:layout_constraintBottom_toTopOf="@+id/dragObstacleLabel"
-                                android:text="Edit Obstacle:"
-                                android:textSize="16sp"
-                                android:textColor="@color/colorBlack"
-                                android:textStyle="bold"/>
+<!--                            <TextView-->
+<!--                                android:id="@+id/editObstacleLabel"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="30dp"-->
+<!--                                android:gravity="end|center_vertical"-->
+<!--                                app:layout_constraintBottom_toTopOf="@+id/dragObstacleLabel"-->
+<!--                                android:text="Edit Obstacle:"-->
+<!--                                android:textSize="16sp"-->
+<!--                                android:textColor="@color/colorBlack"-->
+<!--                                android:textStyle="bold"/>-->
 
                             <TextView
                                 android:id="@+id/dragObstacleLabel"
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:gravity="end|center_vertical"
-                                app:layout_constraintTop_toBottomOf="@id/editObstacleLabel"
                                 android:text="Drag Obstacle:"
                                 android:textSize="16sp"
                                 android:textColor="@color/colorBlack"
-                                android:textStyle="bold"/>
+                                android:textStyle="bold"
+                                tools:ignore="MissingConstraints"
+                                android:fontFamily="@font/sharetech_regular"/>
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="60dp"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="10dp">
+                            android:layout_marginStart="10dp"
+                            android:paddingTop="4dp">
 
-                            <Switch
-                                android:id="@+id/editObstacleSwitch"
-                                android:layout_width="wrap_content"
-                                android:layout_height="30dp"
-                                app:layout_constraintBottom_toTopOf="@+id/dragObstacleSwitch"
-                                tools:ignore="MissingConstraints,UseSwitchCompatOrMaterialXml" />
+<!--                            <Switch-->
+<!--                                android:id="@+id/editObstacleSwitch"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="30dp"-->
+<!--                                app:layout_constraintBottom_toTopOf="@+id/dragObstacleSwitch"-->
+<!--                                tools:ignore="MissingConstraints,UseSwitchCompatOrMaterialXml" />-->
 
                             <Switch
                                 android:id="@+id/dragObstacleSwitch"
                                 android:layout_width="wrap_content"
                                 android:layout_height="30dp"
-                                app:layout_constraintTop_toBottomOf="@id/editObstacleSwitch"
-                                tools:ignore="MissingConstraints,UseSwitchCompatOrMaterialXml" />
+
+                                tools:ignore="MissingConstraints" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <ToggleButton
                             android:id="@+id/startPointToggle"
                             android:layout_width="150dp"
-                            android:layout_height="50dp"
-                            android:backgroundTint="@color/group1"
+                            android:layout_height="40dp"
+                            android:background="@drawable/roundborder_group1"
                             android:textOff="PLACE ROBOT"
                             android:textOn="CANCEL"
                             android:textSize="14sp"
                             android:textAlignment="center"
                             android:textStyle="bold"
-                            android:textColor="@color/colorBlack"/>
+                            android:textColor="@color/colorBlack"
+                            android:fontFamily="@font/sharetech_regular"/>
                     </LinearLayout>
 
 <!--                    <LinearLayout-->
@@ -454,20 +471,22 @@
                         android:baselineAligned="false"
                         android:gravity="center"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        >
 
                         <ToggleButton
                             android:id="@+id/imageRecognitionToggle"
                             android:layout_width="165dp"
-                            android:layout_height="55dp"
+                            android:layout_height="42dp"
                             android:layout_marginEnd="16dp"
-                            android:backgroundTint="@color/group2"
+                            android:background="@drawable/roundborder_group2"
                             android:textAlignment="center"
                             android:textColor="@color/colorBlack"
                             android:textOff="IMAGE RECOGNITION MODE"
                             android:textOn="STOP"
                             android:textSize="14sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:fontFamily="@font/sharetech_regular"/>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="wrap_content"
@@ -484,33 +503,40 @@
                                 android:textAlignment="center"
                                 android:textStyle="normal"
                                 android:textSize="14sp"
-                                android:textColor="@color/colorBlack"/>
+                                android:textColor="@color/colorBlack"
+                                android:fontFamily="@font/sharetech_regular"
+                                />
 
                             <TextView
                                 android:id="@+id/imageRecognitionTimeTextView"
                                 android:layout_width="165dp"
                                 android:layout_height="28dp"
+                                android:background="@drawable/bordertop_group2"
+                                android:fontFamily="@font/sharetech_regular"
                                 android:gravity="center"
-                                android:background="@android:color/darker_gray"
-                                app:layout_constraintTop_toBottomOf="@+id/imageRecognitionTimeLabel"
                                 android:text="00:00"
-                                android:textSize="12sp"
-                                android:textColor="@color/colorBlack"
                                 android:textAlignment="center"
-                                android:textStyle="bold"/>
+                                android:textColor="@color/colorBlack"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                app:layout_constraintTop_toBottomOf="@+id/imageRecognitionTimeLabel"
+                                tools:layout_editor_absoluteX="0dp"
+                                />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/resetImageRecognitionButton"
                             android:layout_width="160dp"
-                            android:layout_height="50dp"
+                            android:layout_height="40dp"
                             android:layout_marginStart="16dp"
-                            android:backgroundTint="@color/group2"
                             android:text="RESET IR TIME"
                             android:textStyle="bold"
                             android:textColor="@color/colorBlack"
                             android:textAlignment="center"
-                            android:textSize="14sp"/>
+                            android:textSize="14sp"
+                            android:fontFamily="@font/sharetech_regular"
+                            android:background="@drawable/roundborder_group2"
+                           />
 
                     </LinearLayout>
 
@@ -525,15 +551,17 @@
                         <ToggleButton
                             android:id="@+id/fastestCarToggle"
                             android:layout_width="165dp"
-                            android:layout_height="50dp"
+                            android:layout_height="40dp"
                             android:layout_marginEnd="16dp"
-                            android:backgroundTint="@color/group3"
+                            android:background="@drawable/roundborder_group3"
                             android:textOff="FASTEST CAR MODE"
                             android:textOn="STOP"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textAlignment="center"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold"
+                            android:fontFamily="@font/sharetech_regular"
+                            />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="wrap_content"
@@ -550,33 +578,40 @@
                                 android:textAlignment="center"
                                 android:textStyle="normal"
                                 android:textSize="14sp"
-                                android:textColor="@color/colorBlack"/>
+                                android:textColor="@color/colorBlack"
+                                android:fontFamily="@font/sharetech_regular"/>
 
                             <TextView
                                 android:id="@+id/fastestCarTimeTextView"
                                 android:layout_width="165dp"
                                 android:layout_height="28dp"
                                 android:gravity="center"
-                                android:background="@android:color/darker_gray"
+                                android:background="@drawable/bordertop_group3"
                                 app:layout_constraintTop_toBottomOf="@+id/fastestCarTimeLabel"
                                 android:text="00:00"
                                 android:textSize="12sp"
                                 android:textColor="@color/colorBlack"
                                 android:textAlignment="center"
-                                android:textStyle="bold"/>
+                                android:textStyle="bold"
+                                android:fontFamily="@font/sharetech_regular"
+
+
+                                />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/resetFastestCarButton"
                             android:layout_width="160dp"
-                            android:layout_height="50dp"
+                            android:layout_height="40dp"
                             android:layout_marginStart="16dp"
-                            android:backgroundTint="@color/group3"
                             android:text="RESET FC TIME"
                             android:textAlignment="center"
                             android:textColor="@color/colorBlack"
                             android:textSize="14sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:fontFamily="@font/sharetech_regular"
+                            android:background="@drawable/roundborder_group3"
+                            />
 
                     </LinearLayout>
 
@@ -592,7 +627,7 @@
                 <TextView
                     android:id="@+id/receiveMsgTextView"
                     android:layout_width="300dp"
-                    android:layout_height="180dp"
+                    android:layout_height="160dp"
                     android:layout_gravity="bottom"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="5dp"
@@ -630,7 +665,7 @@
                         android:id="@+id/sendMsgButton"
                         android:layout_width="100dp"
                         android:layout_height="40dp"
-                        android:backgroundTint="@color/button_color"
+                        android:backgroundTint="#FFB3AE"
                         android:onClick="sendMessage"
                         android:text="SEND"
                         android:textAlignment="center"
@@ -638,14 +673,15 @@
                         android:textSize="14sp"
                         android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@+id/sendMsgEditText"
-                        tools:layout_editor_absoluteX="27dp" />
+                        tools:layout_editor_absoluteX="27dp"
+                        android:fontFamily="@font/sharetech_regular"/>
 
                     <Button
                         android:id="@+id/clearMsgButton"
                         android:layout_width="100dp"
                         android:layout_height="40dp"
                         android:layout_marginStart="50dp"
-                        android:backgroundTint="@color/button_color"
+                        android:backgroundTint="#FFB3AE"
                         android:onClick="clearMessage"
                         android:text="CLEAR"
                         android:textAlignment="center"
@@ -653,7 +689,8 @@
                         android:textSize="14sp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toRightOf="@+id/sendMsgButton"
-                        app:layout_constraintTop_toBottomOf="@+id/sendMsgEditText" />
+                        app:layout_constraintTop_toBottomOf="@+id/sendMsgEditText"
+                        android:fontFamily="@font/sharetech_regular"/>
 
 
 <!--                    <Button-->
@@ -748,27 +785,29 @@
 <!--            app:layout_constraintHorizontal_bias="1.0"-->
 <!--            app:layout_constraintStart_toStartOf="parent" />-->
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/greyLock"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="60dp"
-            android:alpha="0.8"
-            android:background="@color/black"
-            >
-            <TextView
-                android:layout_height="100dp"
-                android:layout_width="400dp"
-                android:textAlignment="center"
-                android:gravity="center"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:text="No device connected"
-                android:textColor="@color/white"
-                android:textSize="20dp"
-                tools:ignore="MissingConstraints" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/greyLock"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.4"
+        android:background="@color/black"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="center">
+
+        <TextView
+            android:layout_width="400dp"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:text="No device connected"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

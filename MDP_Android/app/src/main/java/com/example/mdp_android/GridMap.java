@@ -126,7 +126,7 @@ public class GridMap extends View {
         redPaint.setColor(Color.RED);
         redPaint.setStrokeWidth(3);
         obstacleColor.setColor(Color.BLACK);
-        robotColor.setColor(Color.GREEN);
+        robotColor.setColor(Color.CYAN);
         endColor.setColor(Color.RED);
         startColor.setColor(Color.CYAN);
         unexploredColor.setColor(Color.LTGRAY);

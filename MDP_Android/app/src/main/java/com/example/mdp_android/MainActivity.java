@@ -77,7 +77,8 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
 
     static Button addObstacleButton, resetMapButton;
     static Spinner imageIDSpinner, obstacleBearingSpinner;
-    static Switch editObstacleSwitch, dragObstacleSwitch;
+    //static Switch editObstacleSwitch, dragObstacleSwitch;
+    static Switch dragObstacleSwitch;
     static String imageID; //for spinner
     static String obstacleBearing; //for spinner
 
@@ -202,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
         //Initialising obstacle segment
         addObstacleButton = findViewById(R.id.addObstacleButton);
         dragObstacleSwitch = findViewById(R.id.dragObstacleSwitch);
-        editObstacleSwitch = findViewById(R.id.editObstacleSwitch);
+        //editObstacleSwitch = findViewById(R.id.editObstacleSwitch);
         imageIDSpinner = findViewById(R.id.imageIDSpinner);
         obstacleBearingSpinner = findViewById(R.id.obstacleBearingSpinner);
         imageIDSpinner.setEnabled(false);
@@ -277,25 +278,25 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
                     imageIDSpinner.setEnabled(false);
                     obstacleBearingSpinner.setEnabled(false);
                     gridMap.setObstacleFlag(false);
-                    editObstacleSwitch.setChecked(false);
+                    //editObstacleSwitch.setChecked(false);
                 }
             }
         });
 
-        editObstacleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked) {
-                showToast("Editing obstacle switch is " + (isChecked ? "on" : "off"));
-                editObstacleFlag = isChecked;
-
-                if (editObstacleFlag == true) {
-                    imageIDSpinner.setEnabled(false);
-                    obstacleBearingSpinner.setEnabled(false);
-                    gridMap.setObstacleFlag(false);
-                    dragObstacleSwitch.setChecked(false);
-                }
-            }
-        });
+//        editObstacleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked) {
+//                showToast("Editing obstacle switch is " + (isChecked ? "on" : "off"));
+//                editObstacleFlag = isChecked;
+//
+//                if (editObstacleFlag == true) {
+//                    imageIDSpinner.setEnabled(false);
+//                    obstacleBearingSpinner.setEnabled(false);
+//                    gridMap.setObstacleFlag(false);
+//                    dragObstacleSwitch.setChecked(false);
+//                }
+//            }
+//        });
 
         startPointToggle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -332,7 +333,7 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
                     obstacleBearingSpinner.setEnabled(false);
                 }
 
-                editObstacleSwitch.setChecked(false);
+                //editObstacleSwitch.setChecked(false);
                 dragObstacleSwitch.setChecked(false);
                 showLog("Obstacle flag = " + gridMap.getObstacleFlag());
                 showLog("Exiting addObstacleButton");
@@ -477,6 +478,7 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
                     catch (Exception e) {
                         showLog(e.getMessage());
                     }*/
+                    startFastestCar(); //send Start to ALGO
                     stopFastestCarTimerFlag = false;
                     robotStatusTextView.setText("FC MODE");
                     fastestCarTimer = System.currentTimeMillis();
@@ -1071,6 +1073,14 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
 //        else
 //            Toast.makeText(MainActivity.this, "no obstacles to send or robot not on map...", Toast.LENGTH_SHORT).show();
 //   }
+
+    public void startFastestCar(){
+        String messageToSendAlgo = "START";
+        messageToSendAlgo = "ALG:" + messageToSendAlgo;
+        BTManager.instance.myBluetoothService.sendMessage(messageToSendAlgo);
+        Log.e("TAG",messageToSendAlgo);
+        receiveMsgTextView.append("\n" + "System: Sending to Algo: " + messageToSendAlgo);
+    }
 
 
     public void sendObstaclesToAlgo(){
