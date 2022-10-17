@@ -1075,11 +1075,11 @@ public class MainActivity extends AppCompatActivity implements IAppendMessages {
 //   }
 
     public void startFastestCar(){
-        String messageToSendAlgo = "START";
-        messageToSendAlgo = "ALG:" + messageToSendAlgo;
-        BTManager.instance.myBluetoothService.sendMessage(messageToSendAlgo);
-        Log.e("TAG",messageToSendAlgo);
-        receiveMsgTextView.append("\n" + "System: Sending to Algo: " + messageToSendAlgo);
+        String messageToSendSTM = "START";
+        messageToSendSTM = "STM:" + messageToSendSTM;
+        BTManager.instance.myBluetoothService.sendMessage(messageToSendSTM);
+        Log.e("TAG",messageToSendSTM);
+        receiveMsgTextView.append("\n" + "System: Sending to STM: " + messageToSendSTM);
     }
 
 
